@@ -11,10 +11,15 @@ go to this (https://mailsac.com/api-keys) site. Create an account and get an API
 ## Changelog:
 
 > Generating Temp mails.
+
 > Reading mails.
+
 > Deleting mails.
+
 > Downloading attachments with custom name.
+
 > Checking valid mails.
+
 
 ## Installation and Running 
 
@@ -29,11 +34,14 @@ python3 main.py
 ```
   
 after code execution for first time press 1.
-then enter your API key and press enter.
-then enter your temp mail address you want. Remember than domain should be only @mailsac.com .
-press enter 2 times to go to main menu.  
-ENJOY 🦖
 
+then enter your API key and press enter.
+
+then enter your temp mail address you want. Remember that domain should be only @mailsac.com .
+
+press enter 2 times to go to main menu.
+
+ENJOY 🦖
 
 ## Notes
 Dont edit this script if you hav 0 knowledge about python and bash .
