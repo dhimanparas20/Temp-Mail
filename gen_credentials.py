@@ -28,6 +28,5 @@ print(f"{VIOLET}================================================================
 x = open("credentials.py", "w")
 x.write(f"#Your API is saved here\napi = '{api}' \nmail = '{mail}'")
 x.close()
-system("pip install geocoder")
 print(f"{HIGHLIGHT}{RED}Data saved Sucessfully.{END}")
 sleep(1)
