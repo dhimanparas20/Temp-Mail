@@ -10,7 +10,11 @@ go to this (https://mailsac.com/api-keys) site. Create an account and get an API
  
 ## Changelog:
 
-> init
+> Generating Temp mails.
+> Reading mails.
+> Deleting mails.
+> Downloading attachments with custom name.
+> Checking valid mails.
 
 ## Installation and Running 
 
