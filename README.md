@@ -31,11 +31,11 @@ Linux:
 
 ```sh
 git clone  https://github.com/dhimanparas20/Temp-Mail.git && cd Temp-Mail*
-```
+```sh
   
 ```sh
 python3 main.py
-```
+```sh
   
 After code executes for first time press 0.
 
