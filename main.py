@@ -246,7 +246,9 @@ elif inp == 3:
       system("python3 gen_credentials.py")
       input(f"{VIOLET} PRESS ENTER TO RETURN TO MAIN MENUE")
       loop()
-    
+  else:
+    print(f"\n\n{RED}    EMPTY INBOX :-) , Either get some mails or retry  \n")
+    loop()  
 # Check if Mail is valid or not.
 elif inp == 4:
   if req.ok == True:
