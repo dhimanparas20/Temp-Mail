@@ -74,172 +74,178 @@ if inp == 0:
 
 # Showing of Last Email.
 elif inp == 1:
-  print(f"{BROWN}---------------------------------------------------------------")
-  print(f"{RED}INDEX NO.              : {GREEN}{1} (latest message) out of {len(jon)} (total messages)")
-  print(f"{RED}From                   : {GREEN}{jon[0]['from'][0]['name']} {CYAN}<{jon[0]['from'][0]['address']}>")
-  print(f"{RED}To                     : {GREEN}{mail}")
-  print(f"{RED}Date and Time          : {GREEN}{jon[0]['received']}{END}") 
-  print(f"{RED}id code                : {GREEN}{jon[0]['_id']}")
-  if len(jon[0]['attachments']) >= 1:  # Shows Attachment ID if exixts.
-          ab =  jon[0]['attachments'][0]
-          print(f"{RED}Attachment ID          : {GREEN}{ab}")
-  ip = geocoder.ip(jon[0]['ip'])
-  print(f"{RED}IP based Location      : {GREEN}{ip.city}")
-  print(f"\n{VIOLET}SUBJECT: {YELLOW}{jon[0]['subject']}{END}")
-  print(f"{BROWN}---------------------------------------------------------------")
-  msg = requests.get(f'https://mailsac.com/api/text/{mail}/{jon[0]["_id"]}', headers=headers)
-  print(f"{CYAN}{msg.text}")  
-  if len(jon[0]['attachments']) >= 1: # For Downloading the Attachment.
-          ab =  jon[0]['attachments'][0]
-          att = requests.get(f"https://mailsac.com/api/addresses/{mail}/messages/{jon[0]['_id']}/attachments/{ab}", 
-    headers=headers , allow_redirects=True)
-          print(f"{BROWN}--------------------------------------------------------------\n\n")
-          ask = input(f"{RED}Attachment Detected {BLUE}{att.headers.get('content-type')}.{RED} Do you want to download it? (yes/no) :") 
-          ext = att.headers.get('content-type').partition('/')[2] #Extracts Extention of attachmnet
-          if ask == "yes" or ask == "YES":
-            if (path.exists('Downloads') != True):
-              system("mkdir Downloads")
-            nam = input(f"\n{YELLOW}Enter the name of file to download: {BLUE}") # custom name for file to download
-            download_name = nam+"."+ext  # Final combined Download name
-            open(f'{download_name}', 'wb').write(att.content)
-            system(f"mv \'{download_name}\' Downloads")
-            print(f"{CYAN}Attachment Downloaded to Download Folder")
-          else:
-            loop()
-  print(f"{BROWN}---------------------------------------------------------------")
-  loop()
-
+  if len(jon) != 0:
+    print(f"{BROWN}---------------------------------------------------------------")
+    print(f"{RED}INDEX NO.              : {GREEN}{1} (latest message) out of {len(jon)} (total messages)")
+    print(f"{RED}From                   : {GREEN}{jon[0]['from'][0]['name']} {CYAN}<{jon[0]['from'][0]['address']}>")
+    print(f"{RED}To                     : {GREEN}{mail}")
+    print(f"{RED}Date and Time          : {GREEN}{jon[0]['received']}{END}") 
+    print(f"{RED}id code                : {GREEN}{jon[0]['_id']}")
+    if len(jon[0]['attachments']) >= 1:  # Shows Attachment ID if exixts.
+            ab =  jon[0]['attachments'][0]
+            print(f"{RED}Attachment ID          : {GREEN}{ab}")
+    ip = geocoder.ip(jon[0]['ip'])
+    print(f"{RED}IP based Location      : {GREEN}{ip.city}")
+    print(f"\n{VIOLET}SUBJECT: {YELLOW}{jon[0]['subject']}{END}")
+    print(f"{BROWN}---------------------------------------------------------------")
+    msg = requests.get(f'https://mailsac.com/api/text/{mail}/{jon[0]["_id"]}', headers=headers)
+    print(f"{CYAN}{msg.text}")  
+    if len(jon[0]['attachments']) >= 1: # For Downloading the Attachment.
+            ab =  jon[0]['attachments'][0]
+            att = requests.get(f"https://mailsac.com/api/addresses/{mail}/messages/{jon[0]['_id']}/attachments/{ab}", 
+      headers=headers , allow_redirects=True)
+            print(f"{BROWN}--------------------------------------------------------------\n\n")
+            ask = input(f"{RED}Attachment Detected {BLUE}{att.headers.get('content-type')}.{RED} Do you want to download it? (yes/no) :") 
+            ext = att.headers.get('content-type').partition('/')[2] #Extracts Extention of attachmnet
+            if ask == "yes" or ask == "YES":
+              if (path.exists('Downloads') != True):
+                system("mkdir Downloads")
+              nam = input(f"\n{YELLOW}Enter the name of file to download: {BLUE}") # custom name for file to download
+              download_name = nam+"."+ext  # Final combined Download name
+              open(f'{download_name}', 'wb').write(att.content)
+              system(f"mv \'{download_name}\' Downloads")
+              print(f"{CYAN}Attachment Downloaded to Download Folder")
+            else:
+              loop()
+    print(f"{BROWN}---------------------------------------------------------------")
+    loop()
+  else:
+    print(f"\n\n{RED}    EMPTY INBOX :-) , Either get some mails or retry  \n")
+    loop()
 # Listing of all emails.
 elif inp == 2:
-  if req.ok == True :
-    #print(jon)
-    print (f"\n{RED}=====================================================")
-    rr = len(jon) # counts the number of total mails received.
-    print(f"{BLUE}Total NO. of emails received on {RED}{mail}{CYAN}: {YELLOW}{rr}{END}")
-    print (f"{RED}=====================================================\n")
-    inp2 = int(input(f"{CYAN}Enter the no. of last emails you want to see: {YELLOW}:"))
-    print (f"\n{RED}=====================================================\n")
-    system("clear")
-    if inp2 <= rr:
-      for i in range(0,inp2):
-        print(f"{BROWN}---------------------------------------------------------------")
-        print(f"{RED}INDEX NO.              : {GREEN}{i+1}")
-        print(f"{RED}From                   : {GREEN}{jon[i]['from'][0]['name']} {CYAN}<{jon[i]['from'][0]['address']}>")
-        print(f"{RED}To                     : {GREEN}{mail}")
-        print(f"{RED}Date and Time          : {GREEN}{jon[i]['received']}{END}") 
-        print(f"{RED}id code                : {GREEN}{jon[i]['_id']}")   
-        if len(jon[i]['attachments']) >= 1:  # Shows Attachment ID if exixts.
-          ab =  jon[i]['attachments'][0]
-          print(f"{RED}Attachment ID          : {GREEN}{ab}")
-        ip = geocoder.ip(jon[i]['ip']) #Finds the location of The IP Address
-        print(f"{RED}IP based Location      : {GREEN}{ip.city}")
-        print(f"{VIOLET}SUBJECT: {YELLOW}{jon[i]['subject']}{END}")
- 
+  if len(jon) != 0:
+    if req.ok == True :
+      #print(jon)
       print (f"\n{RED}=====================================================")
-      var3 = int(input(f"{CYAN}Enter the INDEX NO of mail you want to read: {YELLOW}:"))
-      if var3 <= rr:
-        print (f"{RED}=====================================================\n{END}")
-        system("clear")
-        print(f"{BROWN}---------------------------------------------------------------")
-        msg = requests.get(f'https://mailsac.com/api/text/{mail}/{jon[var3-1]["_id"]}', headers=headers) #Reads the content of mail.
-        print(f"{VIOLET}SUBJECT: {YELLOW}{jon[i]['subject']}{END}")
-        print(f"{BROWN}--------------------------------------------------------------")
-        print(f"{CYAN}{msg.text}")  # Prints the Messsage of Mail
-        if len(jon[var3-1]['attachments']) >= 1: # For Downloading the Attachment.
-          ab =  jon[var3-1]['attachments'][0]
-          att = requests.get(f"https://mailsac.com/api/addresses/{mail}/messages/{jon[var3-1]['_id']}/attachments/{ab}", 
-    headers=headers , allow_redirects=True)
-          print(f"{BROWN}--------------------------------------------------------------\n\n")
-          ask = input(f"{RED}Attachment Detected {BLUE}{att.headers.get('content-type')}.{RED} Do you want to download it? (yes/no) :") 
-          ext = att.headers.get('content-type').partition('/')[2] #Extracts Extention of attachmnet
-          if ask == "yes" or ask == "YES":
+      rr = len(jon) # counts the number of total mails received.
+      print(f"{BLUE}Total NO. of emails received on {RED}{mail}{CYAN}: {YELLOW}{rr}{END}")
+      print (f"{RED}=====================================================\n")
+      inp2 = int(input(f"{CYAN}Enter the no. of last emails you want to see: {YELLOW}:"))
+      print (f"\n{RED}=====================================================\n")
+      system("clear")
+      if inp2 <= rr:
+        for i in range(0,inp2):
+          print(f"{BROWN}---------------------------------------------------------------")
+          print(f"{RED}INDEX NO.              : {GREEN}{i+1}")
+          print(f"{RED}From                   : {GREEN}{jon[i]['from'][0]['name']} {CYAN}<{jon[i]['from'][0]['address']}>")
+          print(f"{RED}To                     : {GREEN}{mail}")
+          print(f"{RED}Date and Time          : {GREEN}{jon[i]['received']}{END}") 
+          print(f"{RED}id code                : {GREEN}{jon[i]['_id']}")   
+          if len(jon[i]['attachments']) >= 1:  # Shows Attachment ID if exixts.
+            ab =  jon[i]['attachments'][0]
             print(f"{RED}Attachment ID          : {GREEN}{ab}")
-            if (path.exists('Downloads') != True):
-              system("mkdir Downloads")
-            nam = input(f"\n{YELLOW}Enter the name of file to download: {BLUE}") # custom name for file to download
-            download_name = nam+"."+ext  # Final combined Download name
-            open(f'{download_name}', 'wb').write(att.content)
-            system(f"mv \'{download_name}\' Downloads")
-            print(f"{CYAN}Attachment Downloaded to Download Folder")
-          else:
+          ip = geocoder.ip(jon[i]['ip']) #Finds the location of The IP Address
+          print(f"{RED}IP based Location      : {GREEN}{ip.city}")
+          print(f"{VIOLET}SUBJECT: {YELLOW}{jon[i]['subject']}{END}")
+   
+        print (f"\n{RED}=====================================================")
+        var3 = int(input(f"{CYAN}Enter the INDEX NO of mail you want to read: {YELLOW}:"))
+        if var3 <= rr:
+          print (f"{RED}=====================================================\n{END}")
+          system("clear")
+          print(f"{BROWN}---------------------------------------------------------------")
+          msg = requests.get(f'https://mailsac.com/api/text/{mail}/{jon[var3-1]["_id"]}', headers=headers) #Reads the content of mail.
+          print(f"{VIOLET}SUBJECT: {YELLOW}{jon[i]['subject']}{END}")
+          print(f"{BROWN}--------------------------------------------------------------")
+          print(f"{CYAN}{msg.text}")  # Prints the Messsage of Mail
+          if len(jon[var3-1]['attachments']) >= 1: # For Downloading the Attachment.
+            ab =  jon[var3-1]['attachments'][0]
+            att = requests.get(f"https://mailsac.com/api/addresses/{mail}/messages/{jon[var3-1]['_id']}/attachments/{ab}", headers=headers , allow_redirects=True)
+            print(f"{BROWN}--------------------------------------------------------------\n\n")
+            ask = input(f"{RED}Attachment Detected {BLUE}{att.headers.get('content-type')}.{RED} Do you want to download it? (yes/no) :") 
+            ext = att.headers.get('content-type').partition('/')[2] #Extracts Extention of attachmnet
+            if ask == "yes" or ask == "YES":
+              print(f"{RED}Attachment ID          : {GREEN}{ab}")
+              if (path.exists('Downloads') != True):
+                system("mkdir Downloads")
+              nam = input(f"\n{YELLOW}Enter the name of file to download: {BLUE}") # custom name for file to download
+              download_name = nam+"."+ext  # Final combined Download name
+              open(f'{download_name}', 'wb').write(att.content)
+              system(f"mv \'{download_name}\' Downloads")
+              print(f"{CYAN}Attachment Downloaded to Download Folder")
+            else:
+              loop()
+            print(f"{BROWN}--------------------------------------------------------------\n\n")
             loop()
-          
-        print(f"{BROWN}--------------------------------------------------------------\n\n")
-        loop()
-      else:  
-        print(f"{RED}\n\n\nERROR! Range exceeded the no of present INDEX")
+          else:  
+            print(f"{RED}\n\n\nERROR! Range exceeded the no of present INDEX")
+            print(f"{RED}Try Again within correct range of {CYAN}1-{rr} .")
+         
+            loop()
+      else:
+        print(f"{RED}\n\n\nERROR! Range exceeded the no of total present emails")
         print(f"{RED}Try Again within correct range of {CYAN}1-{rr} .")
-        
         loop()
     else:
-      print(f"{RED}\n\n\nERROR! Range exceeded the no of total present emails")
-      print(f"{RED}Try Again within correct range of {CYAN}1-{rr} .")
+      print("Invalid Email Address")
+      print("Please change the address")
+      sleep(2)
+      system("python3 gen_credentials.py")
+      input(f"{VIOLET} PRESS ENTER TO RETURN TO MAIN MENUE")
       loop()
   else:
-    print("Invalid Email Address")
-    print("Please change the address")
-    sleep(2)
-    system("python3 gen_credentials.py")
-    input(f"{VIOLET} PRESS ENTER TO RETURN TO MAIN MENUE")
+    print(f"\n\n{RED}    EMPTY INBOX :-) , Either get some mails or retry  \n")
     loop()
-
+    
 # Delete a Mail
 elif inp == 3:
-  if req.ok == True :
-    #print(jon)
-    print (f"\n{RED}=====================================================")
-    rr = len(jon) # counts the number of total mails received.
-    print(f"{BLUE}Total NO. of emails received on {RED}{mail}{CYAN}: {YELLOW}{rr}{END}")
-    print (f"{RED}=====================================================\n")
-    inp2 = int(input(f"{CYAN}Enter the no. of last emails you want to see: {YELLOW}:"))
-    print (f"\n{RED}=====================================================\n")
-    system("clear")
-    if inp2 <= rr:
-      for i in range(0,inp2):
-        print(f"{BROWN}---------------------------------------------------------------")
-        print(f"{RED}INDEX NO.              : {GREEN}{i+1}")
-        print(f"{RED}From                   : {GREEN}{jon[i]['from'][0]['name']} {CYAN}<{jon[i]['from'][0]['address']}>")
-        print(f"{RED}To                     : {GREEN}{mail}")
-        print(f"{RED}Date and Time          : {GREEN}{jon[i]['received']}{END}") 
-        print(f"{RED}id code                : {GREEN}{jon[i]['_id']}")
-        ip = geocoder.ip(jon[i]['ip']) #Finds the location of The IP Address
-        print(f"{RED}IP based Location      : {GREEN}{ip.city}")
-        print(f"{VIOLET}SUBJECT: {YELLOW}{jon[i]['subject']}{END}")
- 
+  if len(jon) != 0:
+    if req.ok == True :
+      #print(jon)
       print (f"\n{RED}=====================================================")
-      var3 = int(input(f"{CYAN}Enter the INDEX NO of mail you want to DELETE: {YELLOW}:"))
-      if var3 <= rr:
-        print (f"{RED}=====================================================\n{END}")
-        system("clear")
-        print(f"{BROWN}---------------------------------------------------------------")
-        dell = requests.delete(f'https://mailsac.com/api/addresses/{mail}/messages/{jon[var3-1]["_id"]}', headers=headers) #Deleted the mail.
-        if dell.status_code == 200 :
-          print(f"{GREEN}Mail Deleted sucessfully")
+      rr = len(jon) # counts the number of total mails received.
+      print(f"{BLUE}Total NO. of emails received on {RED}{mail}{CYAN}: {YELLOW}{rr}{END}")
+      print (f"{RED}=====================================================\n")
+      inp2 = int(input(f"{CYAN}Enter the no. of last emails you want to see: {YELLOW}:"))
+      print (f"\n{RED}=====================================================\n")
+      system("clear")
+      if inp2 <= rr:
+        for i in range(0,inp2):
+          print(f"{BROWN}---------------------------------------------------------------")
+          print(f"{RED}INDEX NO.              : {GREEN}{i+1}")
+          print(f"{RED}From                   : {GREEN}{jon[i]['from'][0]['name']} {CYAN}<{jon[i]['from'][0]['address']}>")
+          print(f"{RED}To                     : {GREEN}{mail}")
+          print(f"{RED}Date and Time          : {GREEN}{jon[i]['received']}{END}") 
+          print(f"{RED}id code                : {GREEN}{jon[i]['_id']}")
+          ip = geocoder.ip(jon[i]['ip']) #Finds the location of The IP Address
+          print(f"{RED}IP based Location      : {GREEN}{ip.city}")
+          print(f"{VIOLET}SUBJECT: {YELLOW}{jon[i]['subject']}{END}")
+ 
+        print (f"\n{RED}=====================================================")
+        var3 = int(input(f"{CYAN}Enter the INDEX NO of mail you want to DELETE: {YELLOW}:"))
+        if var3 <= rr:
+          print (f"{RED}=====================================================\n{END}")
+          system("clear")
+          print(f"{BROWN}---------------------------------------------------------------")
+          dell = requests.delete(f'https://mailsac.com/api/addresses/{mail}/messages/{jon[var3-1]["_id"]}', headers=headers) #Deleted the mail.
+          if dell.status_code == 200 :
+            print(f"{GREEN}Mail Deleted sucessfully")
+            loop()
+          else:
+            print(f"{RED}Message Deletion failed, try again")
+            loop()
+          print(f"{VIOLET}SUBJECT: {YELLOW}{jon[i]['subject']}{END}")
+          print(f"{BROWN}--------------------------------------------------------------")
+          print(f"{CYAN}{msg.text}")
+          print(f"{BROWN}--------------------------------------------------------------\n\n")
           loop()
-        else:
-          print(f"{RED}Message Deletion failed, try again")
+        else:  
+          print(f"{RED}\n\n\nERROR! Range exceeded the no of present INDEX")
+          print(f"{RED}Try Again within correct range of {CYAN}1-{rr} .")
+         
           loop()
-        print(f"{VIOLET}SUBJECT: {YELLOW}{jon[i]['subject']}{END}")
-        print(f"{BROWN}--------------------------------------------------------------")
-        print(f"{CYAN}{msg.text}")
-        print(f"{BROWN}--------------------------------------------------------------\n\n")
-        loop()
-      else:  
-        print(f"{RED}\n\n\nERROR! Range exceeded the no of present INDEX")
+      else:
+        print(f"{RED}\n\n\nERROR! Range exceeded the no of total present emails")
         print(f"{RED}Try Again within correct range of {CYAN}1-{rr} .")
-        
         loop()
     else:
-      print(f"{RED}\n\n\nERROR! Range exceeded the no of total present emails")
-      print(f"{RED}Try Again within correct range of {CYAN}1-{rr} .")
+      print("Invalid Email Address")
+      print("Please change the address")
+      sleep(2)
+      system("python3 gen_credentials.py")
+      input(f"{VIOLET} PRESS ENTER TO RETURN TO MAIN MENUE")
       loop()
-  else:
-    print("Invalid Email Address")
-    print("Please change the address")
-    sleep(2)
-    system("python3 gen_credentials.py")
-    input(f"{VIOLET} PRESS ENTER TO RETURN TO MAIN MENUE")
-    loop()
     
 # Check if Mail is valid or not.
 elif inp == 4:
