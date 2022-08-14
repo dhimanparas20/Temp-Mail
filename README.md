@@ -26,11 +26,11 @@ go to this (https://mailsac.com/api-keys) site. Create an account and get an API
 Linux:
 
 ```sh
-./requirements.sh
+git clone  https://github.com/dhimanparas20/Temp-Mail.git && cd Temp-Mail*
 ```
 
 ```sh
-git clone  https://github.com/dhimanparas20/Temp-Mail.git && cd Temp-Mail*
+./requirements.sh
 ```
   
 ```sh
