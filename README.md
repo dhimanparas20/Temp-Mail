@@ -33,13 +33,13 @@ git clone  https://github.com/dhimanparas20/Temp-Mail.git && cd Temp-Mail*
 python3 main.py
 ```
   
-after code execution for first time press 1.
+After code executes for first time press 0.
 
-then enter your API key and press enter.
+Then enter your API key and press enter.
 
-then enter your temp mail address you want. Remember that domain should be only @mailsac.com .
+Then enter your temp mail address you want. Remember that domain should be only @mailsac.com .
 
-press enter 2 times to go to main menu.
+Press enter 2 times to go to main menu.
 
 ENJOY 🦖
 
